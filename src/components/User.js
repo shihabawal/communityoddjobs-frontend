@@ -4,10 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import { createStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
-import Axios from "axios";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import logo from "../img/community_odd_jobs.png";
 import { ToastError } from "../service/toast/Toast";
 import { ToastSuccess } from "../service/toast/Toast";
 import "react-toastify/dist/ReactToastify.css";
@@ -96,16 +94,13 @@ function User(props) {
     }
 
     return (
-        <div className={classes.root} justify="center" alignItems="center"  >
+        <div className={classes.root} justifycontent="center" alignitems="center"  >
             <Backdrop className={classes.backdrop} open={isLoading}>
                 <CircularProgress color="inherit" />
             </Backdrop>
             <ToastContainer />
-            <Grid container className="h100" justify="center" alignItems="center">
+            <Grid container className="h100" justifycontent="center" alignitems="center">
                 <Box component="div" className="signin h100" >
-                    <Box component="div" className="mainlogo mr0">
-                        <img src={logo} alt="Logo" />
-                    </Box>
                     <Box component="div" boxShadow={3} className="signinbox">
                         <Grid container spacing={3} className="mr0">
                             <Grid item xs={12} sm={12}>
@@ -151,7 +146,7 @@ function User(props) {
                                 </Grid>
                                 <Grid container spacing={3}>
                                     <Grid item xs={12} sm={12} md={12} className="pd0" style={{ paddingRight: '0' }}>
-                                        <h6 class="txt-left"><strong>Address</strong></h6>
+                                        <h6 className="txt-left"><strong>Address</strong></h6>
                                     </Grid>
                                 </Grid>
                                 <Grid container spacing={3}>

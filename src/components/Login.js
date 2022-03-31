@@ -11,7 +11,6 @@ import { useHistory } from "react-router-dom";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MuiAlert from "@material-ui/lab/Alert";
-import logo from "../img/community_odd_jobs.png";
 import { userLogin } from "../controllers/UserActions";
 
 function Alert(props) {
@@ -93,16 +92,13 @@ const Login = () => {
   };
 
   return (
-    <div className={classes.root} justify="center" alignItems="center">
+    <div className={classes.root} justifycontent="center" alignitems="center">
       <Backdrop className={classes.backdrop} open={isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
       <ToastContainer />
-      <Grid container className="h100" justify="center" alignItems="center">
+      <Grid container className="h100" justifycontent="center" alignitems="center">
         <Box component="div" className="signin h100">
-          <Box component="div" className="mainlogo">
-            <img src={logo} alt="Logo" />
-          </Box>
           <Box component="div" boxShadow={3} className="signinbox">
             <Box component="div" className="signinbox-in">
               <div className="alert">

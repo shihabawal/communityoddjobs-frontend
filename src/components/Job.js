@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Divider } from "@material-ui/core";
 import JobStyles from "./JobStyles.js";
 import { withStyles } from "@material-ui/styles";
+import Grid from "@material-ui/core/Grid";
 
 function Job(props) {
   const { data, classes, skills } = props;
@@ -44,9 +45,11 @@ function Job(props) {
 
       {pageWidth < 1024 && <Divider className={classes.divider} />}
       <div>
-        <button className="btn-primary" type="submit">
-          Apply
-        </button>
+        <Grid container className="pb30 pt30">
+          <Grid item xs={12} sm={12} md={12}>
+            <button className="btn-primary">Apply</button>
+          </Grid>
+        </Grid>
       </div>
       {/* languages and tools */}
       {/**  <div className={classes.skills}>
