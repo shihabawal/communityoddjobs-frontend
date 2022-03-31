@@ -1,7 +1,7 @@
 $font-stack:  'Montserrat', sans-serif !important;
 
-$primary: #5da5a4;
-$secondary: #092C4C;
+$primary: #1976d2;
+$secondary: #4c0941;
 $info: #7CB6FB;
 $sucess: #27AE60;
 $warning: #E2B93B;
@@ -35,9 +35,9 @@ h6{font-size: 24px; line-height: 62px; padding:0px; margin:0px; }
 
 .MuiTypography-body2{font: 100% $font-stack; }
 
-.btn-primary{background: #5da5a4;  border:1px solid #5da5a4; padding:16px 60px; border-radius: 8px; font-size: 16px; font-weight: 700; }
-.btn-primary span{ border:1px solid #5da5a4;   border-radius: 8px; font-size: 16px; font-weight: 700; }
-.btn-secondary{background: #fff; color:$primary; text-decoration: none; border:1px solid #5da5a4; padding:18px 60px; border-radius: 8px; font-size: 16px; font-weight: 700; }
+.btn-primary{background: #1976d2;  border:1px solid #1976d2; padding:16px 60px; border-radius: 8px; font-size: 16px; font-weight: 700; }
+.btn-primary span{ border:1px solid #1976d2;   border-radius: 8px; font-size: 16px; font-weight: 700; }
+.btn-secondary{background: #fff; color:$primary; text-decoration: none; border:1px solid #1976d2; padding:18px 60px; border-radius: 8px; font-size: 16px; font-weight: 700; }
 .btn-primary span.MuiButton-label{ color:$white; font-family: $font-stack ; font-size: 16px; font-weight: 700;}
 .btn-primary.MuiButton-contained{box-shadow: none !important; background: $primary ; text-transform: capitalize; padding:16px 60px; border-radius: 8px;}
 button.btn-primary.MuiButton-contained{box-shadow: none !important; background: $primary ; text-transform: capitalize; padding:0; border-radius: 8px;}
@@ -48,13 +48,15 @@ button.btn-primary.MuiButton-contained span{box-shadow: none !important;  text-t
 .container{ max-width: 1440px; margin:0px auto; }
 .cont-left{background: $bg1; background-image: url(../src/img/bg-top.jpg); background-repeat: no-repeat; background-position:   top left;}
 .cont-left-img {  background-image: url(../src/img/bg-bottom.jpg); background-repeat: no-repeat; background-position:   bottom right;}
-.btn-disabled{background: #7e7e7e;  border:1px solid #5da5a4; padding:16px 60px; border-radius: 8px; font-size: 16px; font-weight: 700; }
+.btn-disabled{background: #7e7e7e;  border:1px solid #1976d2; padding:16px 60px; border-radius: 8px; font-size: 16px; font-weight: 700; }
 .btn-disabled span.MuiButton-label{ color:$white; font-family: $font-stack ; font-size: 16px; font-weight: 700;}
 .btn-disabled.MuiButton-contained{box-shadow: none !important; background: $primary ; text-transform: capitalize; padding:16px 60px; border-radius: 8px;}
-
+.MuiGrid-container{
+  margin-top: 50px;
+}
 .btn-primary-add {
-  background: #5da5a4 !important;
-  border: 1px solid #5da5a4 !important;
+  background: #1976d2 !important;
+  border: 1px solid #1976d2 !important;
   padding: 7px 30px !important;
   border-radius: 8px;
   font-size: 16px;
@@ -68,7 +70,7 @@ button.btn-primary.MuiButton-contained span{box-shadow: none !important;  text-t
   background: #fff !important;
   color: $primary !important;
   text-decoration: none;
-  border: 1px solid #5da5a4 !important;
+  border: 1px solid #1976d2 !important;
   padding: 7px 30px !important;
   border-radius: 8px;
   font-size: 16px;
@@ -93,8 +95,8 @@ body, html,  .main{ min-height: 100%;}
 label{ font-family: $font-stack;}
 label span{ font-family: $font-stack;}
 .mainlogo{ text-align: center; margin:3% 0;}
-.signin{  align-items: center; justify-content: center; min-width: 640px;     display: flex; flex-direction: column; }
-.signinbox{ max-width: 800px; border-radius: 8px; text-align: center; }
+.signin{  align-items: center; justify-content: center; min-width: 640px;     /*display: flex;*/ flex-direction: column; }
+.signinbox{ /*max-width: 800px;*/ border-radius: 8px; text-align: center; }
 
 .righticons{color:$sucess; color: #27AE60; width: 90px;  height: 150px;  margin: 0px auto;}
 .righticons svg{ width:90px; height:100px;}
@@ -123,7 +125,7 @@ label span{ font-family: $font-stack;}
 
 .welcometext{ font-size: 4.099560761346998vw; margin-bottom: 30px; color:#fff; line-height: 4.7584vw;  
     span{
-        color:#5da5a4;  display: block;
+        color:#1976d2;  display: block;
     }
 
 }
@@ -277,7 +279,7 @@ label span{ font-family: $font-stack;}
 .pb30{padding-bottom: 30px;}
 .pb10{padding-bottom: 10px;}
 .pt25{padding-top: 25px;}
-.pt30{padding-top: 30px;}
+//.pt30{padding-top: 30px;}
 .pb5em{padding-bottom: 5em;}
 .pad0{padding:0px !important}
 .graycolumn{color: $gray2;} 
@@ -465,7 +467,7 @@ background: $primary;}
 
 .bx-shadow{box-shadow: 2px 2px 3px 2px rgba(0,0,0,0.2) !important;}
 
-.MuiAppBar-colorPrimary{background-color:$white !important;  box-shadow: none !important;}
+//.MuiAppBar-colorPrimary{background-color:$white !important;  box-shadow: none !important;}
 .MuiTabs-scroller .MuiButtonBase-root{    opacity: 1;}
 .MuiTabs-scroller .MuiButtonBase-root.Mui-selected .MuiTab-wrapper{color:$black2} 
 .MuiTabs-scroller .MuiButtonBase-root span.MuiTab-wrapper{color:$primary; font-family: $font-stack; font-size:24px; opacity: 1; text-transform: capitalize;}
@@ -496,9 +498,9 @@ background: $primary;}
 }
 .cancelbtn{
   background: #fff !important;
-  color: #5da5a4 !important;
+  color: #1976d2 !important;
   text-decoration: none;
-  border: 1px solid #5da5a4 !important;
+  border: 1px solid #1976d2 !important;
   padding: 14px 60px !important;
   border-radius: 8px !important;
   font-size: 16px !important;
@@ -526,8 +528,8 @@ background: $primary;}
 .filedone div p{line-height: 45px; width:100px;}
 .MuiRadio-root.MuiRadio-colorSecondary.MuiIconButton-colorSecondary{height:40px;}
 .MuiInputAdornment-root.MuiInputAdornment-positionEnd button .MuiIconButton-label{height:30px;} 
-.MuiPickersToolbar-toolbar{background-color:#5da5a4 !important  }
-.MuiPickersDay-daySelected{background-color:#5da5a4 !important  }
+.MuiPickersToolbar-toolbar{background-color:#1976d2 !important  }
+.MuiPickersDay-daySelected{background-color:#1976d2 !important  }
 
 .threedot{padding: 0 10px 10px 10px;
     white-space: nowrap;
@@ -538,7 +540,7 @@ background: $primary;}
 
 }
 .threedot:hover{
-    color:#5da5a4;
+    color:#1976d2;
     cursor: pointer;
    
 }
@@ -553,7 +555,7 @@ background: $primary;}
 }
 .reschedule .dividercls { margin:10px 0px !important}
 .title1 {
-  color: #5da5a4;
+  color: #1976d2;
   font-weight: bold;
   font-size: 28px;
   padding-bottom:15px;
@@ -579,14 +581,14 @@ background: $primary;}
 
 .listmenu:hover{cursor: pointer;}
 .listmenu span:hover{ cursor: pointer;}
-.listmenu span:hover{ color:#5da5a4; text-decoration: underline;}
+.listmenu span:hover{ color:#1976d2; text-decoration: underline;}
 .mainpopup .MuiPaper-root.MuiDialog-paper .MuiDialogTitle-root{ padding:25px 35px 0px 35px;}
 .mainpopup .MuiPaper-root.MuiDialog-paper .MuiDialogTitle-root h6{color:$primary; font-weight: bold; font-size:28px; } 
 .mainpopup .MuiPaper-root.MuiDialog-paper .MuiDialogContent-root{padding:25px 35px; border-top:none; }
 .detail-list  .details-label{ color:$gray3; font-size:16px; padding-bottom: 0px !important;}
 .detail-list   .details-value{ color:$secondary; font-size: 18px; font-weight: bold; padding-bottom:10px !important}
-.dividercls{margin:20px 0px !important; background-color:#5da5a4 !important;}
-.filedone .MuiGrid-root.MuiGrid-container {border: 1px solid #bdbdbd !important; border-radius: 5px; margin-bottom:15px; padding:0px 15px;}
+.dividercls{margin:20px 0px !important; background-color:#1976d2 !important;}
+.filedone .MuiGrid-root.MuiGrid-container {border: 1px solid #bdbdbd !important; border-radius: 5px;margin-bottom:15px; padding:0px 15px;}
 .uploadborderr{margin:20px 0px; border:2px dashed #bdbdbd !important; border-radius: 5px; text-align:center; padding:20px; }
 .datepickcust .MuiOutlinedInput-input { padding: 19px 14px 12px; }
 .selectbox1   svg {
@@ -611,7 +613,7 @@ background: $primary;}
     margin: 6px 0px;
 }
  .uploadborderr svg{ width:2em; height:2em;}
- .uploadborderr p{color:#5da5a4 }
+ .uploadborderr p{color:#1976d2 }
  * {
 	margin: 0;
 }
@@ -662,7 +664,7 @@ body {
 .footer {
   flex-shrink: 0;
   text-align: center;
-  background-color: #5da5a4;
+  background-color: #1976d2;
   color: white;
   padding:8px 0px;
   
