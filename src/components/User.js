@@ -28,7 +28,7 @@ function User(props) {
     const [isLoading, setLoading] = React.useState(false);
     const defaultFormData = {
         name: '',
-        address: '',
+        line1: '',
         city: '',
         state: '',
         country: '',
@@ -52,13 +52,15 @@ function User(props) {
     const validateAndSaveUser = () => {
         setLoading(true);
         setIsButtonClicked(true);
-        if (!formData.name.trim()
+        if (!formData.name.trim() || !formData.line1.trim()
             || !formData.country.trim() || !formData.state.trim() || !formData.city.trim()
             || !formData.zip.trim() || !formData.email.trim() || !formData.password.trim() || !formData.contact.trim()) {
             ToastError("Please fill all required fields");
+            setLoading(false);
         } else {
             if ((formData.email && !emailPattern.test(formData.email))) {
                 ToastError("Please enter a valid email address");
+                setLoading(false);
                 return;
             }
             /**if((formData.contact && (!numberPattern.test(formData.contact) || formData.contact.length != 10))){
