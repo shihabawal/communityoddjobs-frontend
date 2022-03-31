@@ -2,8 +2,9 @@ import "./App.css";
 import "./colors.scss";
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Login from './components/Login';
-import User from './components/User';
+import Login from "./components/Login";
+import User from "./components/User";
+import JobListing from "./components/JobListing";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 
@@ -24,10 +25,10 @@ class App extends Component {
                 <Route path="/" component={Login} exact />
                 <Route path="/Login" component={Login} />
                 <Route path="/User" component={User} />
+                <Route path="/JobListing" component={JobListing} />
               </Switch>
             </Container>
           </React.Fragment>
-         
         </div>
       </BrowserRouter>
     );
