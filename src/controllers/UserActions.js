@@ -10,10 +10,27 @@ export const userLogin = (email, password, callback, error) => {
             password
         },
         headers: {
-            // "Content-Type": "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             "Access-Control-Allow-Origin": "*",
-            // Authorization: "Bearer " + sessionStorage.getItem("idToken")
         },
+    }).then(response => {
+        if (response.status && response.status === 200) {
+            callback && callback(response.data);
+        }
+    }).catch((err) => {
+        error && error(err)
+    })
+}
+
+export const saveUser = (payload, callback, error) => {
+    console.log('payload', payload)
+    Axios({
+        method: "post",
+        url: env.REACT_APP_API_URL + "/user/create",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        data: payload
     }).then(response => {
         if (response.status && response.status === 200) {
             callback && callback(response.data);

@@ -9,9 +9,11 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import logo from "../img/community_odd_jobs.png";
 import { ToastError } from "../service/toast/Toast";
+import { ToastSuccess } from "../service/toast/Toast";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useStyles } from "./CustomStyle";
+import { saveUser } from "../controllers/UserActions";
 
 const BootstrapInput = withStyles((theme) =>
     createStyles({
@@ -39,7 +41,7 @@ function User(props) {
     const classes = useStyles();
     const [formData, setFormData] = React.useState(defaultFormData);
     const [isButtonClicked, setIsButtonClicked] = React.useState(false);
-    
+
     const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const numberPattern = new RegExp(/^[0-9\b]+$/);
 
@@ -49,16 +51,15 @@ function User(props) {
         setFormData(data);
     };
 
-    const saveUser =async()=> {
-        debugger;
+    const validateAndSaveUser = () => {
         setLoading(true);
         setIsButtonClicked(true);
-        if(!formData.name.trim() 
+        if (!formData.name.trim()
             || !formData.country.trim() || !formData.state.trim() || !formData.city.trim()
-            || !formData.zip.trim() || !formData.email.trim() || !formData.password.trim() ||  !formData.contact.trim()){
+            || !formData.zip.trim() || !formData.email.trim() || !formData.password.trim() || !formData.contact.trim()) {
             ToastError("Please fill all required fields");
-        }else{
-            if((formData.email && !emailPattern.test(formData.email))){
+        } else {
+            if ((formData.email && !emailPattern.test(formData.email))) {
                 ToastError("Please enter a valid email address");
                 return;
             }
@@ -67,39 +68,27 @@ function User(props) {
                 return;
             }**/
             let address = {
-                "line1" : formData.line1,
-                "city" : formData.city,
-                "state" : formData.state,
-                "country" : formData.country,
-                "zip" : formData.zip
+                "line1": formData.line1,
+                "city": formData.city,
+                "state": formData.state,
+                "country": formData.country,
+                "zip": formData.zip
             }
             let payload = {
                 "name": formData.name,
                 "email": formData.email,
-                "password" : formData.password,
+                "password": formData.password,
                 "contact": formData.contact,
                 "address": address,
             }
             console.log('payload', payload)
-            try {
-                let config = {
-                    method: "post",
-                    url: "http://localhost:3001/user/create",
-                    headers: {
-                      "Content-Type": "application/json",
-                      "Access-Control-Allow-Origin": "*",
-                     Authorization: "Bearer " + sessionStorage.getItem("idToken"),
-                    },
-                    data: payload
-                  };
-               let responseData = await Axios(config);
-               console.log(" responseData ", responseData)
-                if(responseData.status == 200){
-                    setLoading(false);
-                }
-              } catch (err) {
-                console.log(err);
-              }
+            saveUser(payload, (data) => {
+                ToastSuccess("User Profile saved successfully");
+                setLoading(false);
+            }, (err) => {
+                ToastError("Unexpected error during User Profile Save");
+                setLoading(false);
+            });
         }
     }
 
@@ -143,7 +132,7 @@ function User(props) {
                                         <BootstrapInput
                                             className="primary-input mb20 width100p"
                                             placeholder="Password"
-                                            type = "password"
+                                            type="password"
                                             value={formData.password}
                                             onChange={(e) => onFormChange("password", e.target.value)}
                                         />
@@ -208,7 +197,7 @@ function User(props) {
                                 </Grid>
                                 <Grid container className="pb30 pt30">
                                     <Grid item xs={12} sm={12} md={12}>
-                                        <button className="btn-primary" onClick={saveUser}>Save</button>
+                                        <button className="btn-primary" onClick={validateAndSaveUser}>Save</button>
                                     </Grid>
                                 </Grid>
                             </Grid>
