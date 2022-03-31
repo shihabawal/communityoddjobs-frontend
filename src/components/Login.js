@@ -12,6 +12,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MuiAlert from "@material-ui/lab/Alert";
 import logo from "../img/community_odd_jobs.png";
+import { userLogin } from "../controllers/UserActions";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -46,8 +47,8 @@ const BootstrapInput = withStyles((theme: Theme) =>
 const Login = () => {
   const history = useHistory();
   const classes = useStyles();
-  const [userName, setUserName] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [userName, setUserName] = React.useState("shihabawal0007@gmail.com");
+  const [password, setPassword] = React.useState("shihabawal");
   const [isLoading, setLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
 
@@ -68,15 +69,26 @@ const Login = () => {
       return false;
     }
 
-    let data = JSON.stringify({ username: userName, password: password });
-    let config = {
-      method: "post",
-      url: "",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
+    userLogin(userName, password, (data) => {
+      // if no user data is error message
+      if (!data._id) {
+        setErrorMessage(data);
+        setLoading(false);
+        return;
+      }
+      sessionStorage.setItem("user", JSON.stringify(data));
+      setLoading(false);
+    });
+
+    // let data = JSON.stringify({ username: userName, password: password });
+    // let config = {
+    //   method: "post",
+    //   url: "",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   data: data,
+    // };
     setLoading(true);
   };
 

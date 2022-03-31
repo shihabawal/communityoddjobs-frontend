@@ -9,9 +9,11 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import logo from "../img/community_odd_jobs.png";
 import { ToastError } from "../service/toast/Toast";
+import { ToastSuccess } from "../service/toast/Toast";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useStyles } from "./CustomStyle";
+import { saveUser } from "../controllers/UserActions";
 
 const BootstrapInput = withStyles((theme) =>
     createStyles({
@@ -28,18 +30,18 @@ function User(props) {
     const [isLoading, setLoading] = React.useState(false);
     const defaultFormData = {
         name: '',
-        addressLine: '',
+        address: '',
         city: '',
         state: '',
         country: '',
         zip: '',
-        workEmail: '',
-        contactNumber: ''
+        email: '',
+        contact: ''
     }
     const classes = useStyles();
     const [formData, setFormData] = React.useState(defaultFormData);
     const [isButtonClicked, setIsButtonClicked] = React.useState(false);
-    
+
     const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const numberPattern = new RegExp(/^[0-9\b]+$/);
 
@@ -49,54 +51,47 @@ function User(props) {
         setFormData(data);
     };
 
-    const saveUser =async()=> {
+    const validateAndSaveUser = () => {
         setLoading(true);
         setIsButtonClicked(true);
-        if(!formData.name.trim() 
-            || !formData.addressLine.trim() || !formData.country.trim() || !formData.state.trim() || !formData.city.trim()
-            || !formData.zip.trim() || !formData.workEmail.trim() || !formData.contactNumber.trim()){
+        if (!formData.name.trim()
+            || !formData.country.trim() || !formData.state.trim() || !formData.city.trim()
+            || !formData.zip.trim() || !formData.email.trim() || !formData.password.trim() || !formData.contact.trim()) {
             ToastError("Please fill all required fields");
-        }else{
-            if((formData.workEmail && !emailPattern.test(formData.workEmail))){
+        } else {
+            if ((formData.email && !emailPattern.test(formData.email))) {
                 ToastError("Please enter a valid email address");
                 return;
             }
-            if((formData.contactNumber && (!numberPattern.test(formData.contactNumber) || formData.contactNumber.length != 10))){
+            /**if((formData.contact && (!numberPattern.test(formData.contact) || formData.contact.length != 10))){
                 ToastError("Please enter a valid contact number");
                 return;
-            }
-
-            let payload = {
-                "name": formData.name,
-                "workEmail": formData.workEmail,
-                "contactNmbr": formData.contactNumber,
-                "addressLine": formData.addressLine1,
+            }**/
+            let address = {
+                "line1": formData.line1,
                 "city": formData.city,
                 "state": formData.state,
                 "country": formData.country,
                 "zip": formData.zip
             }
+            let payload = {
+                "name": formData.name,
+                "email": formData.email,
+                "password": formData.password,
+                "contact": formData.contact,
+                "address": address,
+            }
             console.log('payload', payload)
-            try {
-                let config = {
-                    method: "post",
-                    url: "",
-                    headers: {
-                      "Content-Type": "application/json",
-                      "Access-Control-Allow-Origin": "*",
-                     Authorization: "Bearer " + sessionStorage.getItem("idToken"),
-                    },
-                    data: payload
-                  };
-               let responseData = await Axios(config);
-               console.log(" responseData ", responseData)
-                if(responseData.status == 200){
-                    setLoading(false);
-                    //props.history.push('/Mapping');
+            saveUser(payload, (data) => {
+                if (data._id) {
+                    ToastSuccess("User Profile saved successfully");
                 }
-              } catch (err) {
-                console.log(err);
-              }
+                ToastError(data);
+                setLoading(false);
+            }, (err) => {
+                ToastError("Unexpected error during User Profile Save");
+                setLoading(false);
+            });
         }
     }
 
@@ -118,7 +113,7 @@ function User(props) {
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <Grid container spacing={3}>
-                                    <Grid item xs={12} sm={6} md={5} className={`pd0 txt-left ${isButtonClicked && !formData.companyLegalName.trim() ? 'requird' : ''}`}>
+                                    <Grid item xs={12} sm={6} md={5} className={`pd0 txt-left ${isButtonClicked}`}>
                                         <BootstrapInput
                                             className="primary-input mb20 width100p"
                                             placeholder="Name"
@@ -128,20 +123,29 @@ function User(props) {
                                     </Grid>
                                 </Grid>
                                 <Grid container spacing={3}>
-                                    <Grid item xs={12} sm={6} md={3} className={`pd0 txt-left ${isButtonClicked && (!formData.workEmail || !emailPattern.test(formData.workEmail)) ? 'requird' : ''}`}>
+                                    <Grid item xs={12} sm={6} md={3} className={`pd0 txt-left ${isButtonClicked && (!formData.email || !emailPattern.test(formData.email)) ? 'requird' : ''}`}>
                                         <BootstrapInput
                                             className="primary-input mb20 width100p"
                                             placeholder="Work Email"
-                                            value={formData.workEmail}
-                                            onChange={(e) => onFormChange("workEmail", e.target.value)}
+                                            value={formData.email}
+                                            onChange={(e) => onFormChange("email", e.target.value)}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} sm={6} md={3} className={`pd0 txt-left ${isButtonClicked && (!formData.contactNumber || !numberPattern.test(formData.contactNumber) || formData.contactNumber.length != 10) ? 'requird' : ''}`}>
+                                    <Grid item xs={12} sm={6} md={3} className={`pd0 txt-left ${isButtonClicked && (!formData.email || !emailPattern.test(formData.email)) ? 'requird' : ''}`}>
+                                        <BootstrapInput
+                                            className="primary-input mb20 width100p"
+                                            placeholder="Password"
+                                            type="password"
+                                            value={formData.password}
+                                            onChange={(e) => onFormChange("password", e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6} md={3} className={`pd0 txt-left ${isButtonClicked && (!formData.contact || !numberPattern.test(formData.contact) || formData.contact.length != 10) ? 'requird' : ''}`}>
                                         <BootstrapInput
                                             className="primary-input mb20 width100p"
                                             placeholder="Contact Number"
-                                            value={formData.contactNumber}
-                                            onChange={(e) => onFormChange("contactNumber", e.target.value)}
+                                            value={formData.contact}
+                                            onChange={(e) => onFormChange("contact", e.target.value)}
                                         />
                                     </Grid>
                                 </Grid>
@@ -151,12 +155,12 @@ function User(props) {
                                     </Grid>
                                 </Grid>
                                 <Grid container spacing={3}>
-                                    <Grid item xs={12} sm={6} md={6} className={`pd0 txt-left ${isButtonClicked && !formData.addressLine1.trim() ? 'requird' : ''}`}>
+                                    <Grid item xs={12} sm={6} md={6} className={`pd0 txt-left ${isButtonClicked && !formData.line1.trim() ? 'requird' : ''}`}>
                                         <BootstrapInput
                                             className="primary-input mb20 width100p"
                                             placeholder="Address Line"
-                                            value={formData.addressLine}
-                                            onChange={(e) => onFormChange("addressLine", e.target.value)}
+                                            value={formData.line1}
+                                            onChange={(e) => onFormChange("line1", e.target.value)}
                                         />
                                     </Grid>
                                 </Grid>
@@ -196,7 +200,7 @@ function User(props) {
                                 </Grid>
                                 <Grid container className="pb30 pt30">
                                     <Grid item xs={12} sm={12} md={12}>
-                                        <button className="btn-primary" onClick={saveUser}>Save</button>
+                                        <button className="btn-primary" onClick={validateAndSaveUser}>Save</button>
                                     </Grid>
                                 </Grid>
                             </Grid>
