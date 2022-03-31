@@ -83,7 +83,10 @@ function User(props) {
             }
             console.log('payload', payload)
             saveUser(payload, (data) => {
-                ToastSuccess("User Profile saved successfully");
+                if (data._id) {
+                    ToastSuccess("User Profile saved successfully");
+                }
+                ToastError(data);
                 setLoading(false);
             }, (err) => {
                 ToastError("Unexpected error during User Profile Save");
