@@ -97,7 +97,12 @@ const Login = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <ToastContainer />
-      <Grid container className="h100" justifycontent="center" alignitems="center">
+      <Grid
+        container
+        className="h100"
+        justifycontent="center"
+        alignitems="center"
+      >
         <Box component="div" className="signin h100">
           <Box component="div" boxShadow={3} className="signinbox">
             <Box component="div" className="signinbox-in">
@@ -140,5 +145,3 @@ const Login = () => {
   );
 };
 export default Login;
-
-
