@@ -12,16 +12,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useStyles } from "./CustomStyle";
 import { saveJobListing } from "../controllers/UserActions";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Datepickermod from "./datepicker";
 
 const BootstrapInput = withStyles((theme) =>
   createStyles({
@@ -41,7 +36,7 @@ function CreateJob(props) {
     employerEmail: "",
     title: "",
     location: "",
-    dateOfService: "",
+    dateOfService: Date.now(),
     ratePerHour: "",
     description: "",
   };
@@ -51,7 +46,6 @@ function CreateJob(props) {
 
   const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const numberPattern = new RegExp(/^[0-9\b]+$/);
-  const datePattern = new Date();
 
   const onFormChange = (keyName, keyValue) => {
     const data = { ...formData };
@@ -67,7 +61,7 @@ function CreateJob(props) {
       !formData.employerEmail.trim() ||
       !formData.title.trim() ||
       !formData.location.trim() ||
-      !formData.dateOfService.trim() ||
+      !formData.dateOfService ||
       !formData.ratePerHour.trim() ||
       !formData.description.trim()
     ) {
@@ -78,14 +72,15 @@ function CreateJob(props) {
         formData.employerEmail &&
         !emailPattern.test(formData.employerEmail)
       ) {
-        ToastError("Please enter a valid employerEmail address");
+        ToastError("Please enter a valid Employer Email");
         setLoading(false);
         return;
       }
-      /**if((formData.contact && (!numberPattern.test(formData.contact) || formData.contact.length != 10))){
-                ToastError("Please enter a valid contact number");
-                return;
-            }**/
+      if ((formData.ratePerHour && (!numberPattern.test(formData.ratePerHour) || formData.ratePerHour.length == 0))) {
+        ToastError("Please enter a valid Rate Per Hour");
+        setLoading(false);
+        return;
+      }
       let payload = {
         adminId: "624606e38d77a630d4c4e8f6", //TODO
         employerName: formData.employerName,
@@ -100,11 +95,12 @@ function CreateJob(props) {
       saveJobListing(
         payload,
         (data) => {
-          if (data._id) {
-            setLoading(false);
+          if (data.status === 'success') {
             ToastSuccess("Job List saved successfully");
+          } else {
+            ToastError(data.message);
           }
-          //ToastError(data);
+          setLoading(false);
         },
         (err) => {
           setLoading(false);
@@ -145,11 +141,10 @@ function CreateJob(props) {
                   <Grid
                     item
                     xs={12}
-                    className={`pd0 txt-left ${
-                      isButtonClicked && !formData.employerName.trim()
-                        ? "requird"
-                        : ""
-                    }`}
+                    className={`pd0 txt-left ${isButtonClicked && !formData.employerName.trim()
+                      ? "requird"
+                      : ""
+                      }`}
                   >
                     <BootstrapInput
                       className="primary-input mb20 width100p"
@@ -163,13 +158,12 @@ function CreateJob(props) {
                   <Grid
                     item
                     xs={12}
-                    className={`pd0 txt-left ${
-                      isButtonClicked &&
+                    className={`pd0 txt-left ${isButtonClicked &&
                       (!formData.employerEmail ||
                         !emailPattern.test(formData.employerEmail))
-                        ? "requird"
-                        : ""
-                    }`}
+                      ? "requird"
+                      : ""
+                      }`}
                   >
                     <BootstrapInput
                       className="primary-input mb20 width100p"
@@ -183,9 +177,8 @@ function CreateJob(props) {
                   <Grid
                     item
                     xs={12}
-                    className={`pd0 txt-left ${
-                      isButtonClicked && !formData.title.trim() ? "requird" : ""
-                    }`}
+                    className={`pd0 txt-left ${isButtonClicked && !formData.title.trim() ? "requird" : ""
+                      }`}
                   >
                     <BootstrapInput
                       className="primary-input mb20 width100p"
@@ -197,11 +190,10 @@ function CreateJob(props) {
                   <Grid
                     item
                     xs={12}
-                    className={`pd0 txt-left ${
-                      isButtonClicked && !formData.location.trim()
-                        ? "requird"
-                        : ""
-                    }`}
+                    className={`pd0 txt-left ${isButtonClicked && !formData.location.trim()
+                      ? "requird"
+                      : ""
+                      }`}
                   >
                     <BootstrapInput
                       className="primary-input mb20 width100p"
@@ -210,37 +202,26 @@ function CreateJob(props) {
                       onChange={(e) => onFormChange("location", e.target.value)}
                     />
                   </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    className={`pd0 txt-left ${
-                      isButtonClicked &&
-                      (!formData.dateOfService ||
-                        !datePattern.test(formData.dateOfService))
-                        ? "requird"
-                        : ""
-                    }`}
-                  >
-                    <BootstrapInput
-                      className="primary-input mb20 width100p"
-                      placeholder="Date of Service"
-                      value={formData.dateOfService}
-                      onChange={(e) =>
-                        onFormChange("dateOfService", e.target.value)
-                      }
+                  <Grid item xs={12}>
+                    <Datepickermod
+                      label={"Date of Service (dd/mm/yyyy)"}
+                      value={(formData.dateOfService.length === 20 || formData.dateOfService.length === 24) ? formData.dateOfService.split("T")[0] + "T12:00:00Z" : formData.dateOfService}
+                      minDate={Date.now()}
+                      dateChanged={(val) => {
+                        onFormChange("dateOfService", val)
+                      }}
                     />
                   </Grid>
                   <Grid
                     item
                     xs={12}
-                    className={`pd0 txt-left ${
-                      isButtonClicked &&
+                    className={`pd0 txt-left ${isButtonClicked &&
                       (!formData.ratePerHour ||
                         !numberPattern.test(formData.ratePerHour) ||
                         formData.ratePerHour.length != 10)
-                        ? "requird"
-                        : ""
-                    }`}
+                      ? "requird"
+                      : ""
+                      }`}
                   >
                     <BootstrapInput
                       className="primary-input mb20 width100p"
@@ -255,11 +236,10 @@ function CreateJob(props) {
                   <Grid
                     item
                     xs={12}
-                    className={`pd0 txt-left ${
-                      isButtonClicked && !formData.description.trim()
-                        ? "requird"
-                        : ""
-                    }`}
+                    className={`pd0 txt-left ${isButtonClicked && !formData.description.trim()
+                      ? "requird"
+                      : ""
+                      }`}
                   >
                     <BootstrapInput
                       className="primary-input mb20 width100p"

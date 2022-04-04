@@ -81,12 +81,12 @@ function User(props) {
                 "contact": formData.contact,
                 "address": address,
             }
-            console.log('payload', payload)
             saveUser(payload, (data) => {
-                if (data._id) {
+                if (data.status === 'success') {
                     ToastSuccess("User Profile saved successfully");
+                } else {
+                    ToastError(data.message);
                 }
-                ToastError(data);
                 setLoading(false);
             }, (err) => {
                 ToastError("Unexpected error during User Profile Save");
