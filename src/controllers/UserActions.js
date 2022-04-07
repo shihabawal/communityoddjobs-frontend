@@ -64,3 +64,24 @@ export const saveJobListing = (payload, callback, error) => {
       error && error(err);
     });
 };
+
+export const retrieveJobListing = (payload, callback, error) => {
+  console.log("payload", payload);
+  Axios({
+    method: "get",
+    url: env.REACT_APP_API_URL + "/listing/",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    data: payload,
+  })
+    .then((response) => {
+      if (response.status && response.status === 200) {
+        callback && callback(response.data);
+      }
+    })
+    .catch((err) => {
+      error && error(err);
+    });
+};
