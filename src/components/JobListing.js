@@ -11,23 +11,24 @@ function JobListing(props) {
   const [isLoading, setLoading] = useState(false);
   const [jobData, setJobData] = useState({});
 
-  retrieveJobListing({}, (data) => {
-    setLoading(true);
-    debugger;
-    if (data.status === 'success') {
-      console.log("Retrieval " + data);
-      setJobData(data);
-    } else {
+  const retrieveJobListingOnPageLoad = () => {
+    retrieveJobListing({}, (data) => {
+      setLoading(true);
+      if (data.status === 'success') {
+        console.log("Retrieval " + data);
+        setJobData(data);
+      } else {
+        console.log("Unexpected error during retrieval");
+      }
+      setLoading(false);
+    }, (err) => {
       console.log("Unexpected error during retrieval");
-    }
-    setLoading(false);
-  }, (err) => {
-    console.log("Unexpected error during retrieval");
-    setLoading(false);
-  });
+      setLoading(false);
+    });
+  }
 
   useEffect(() => {
-    retrieveJobListing();
+    retrieveJobListingOnPageLoad();
   }, []);
 
   return (

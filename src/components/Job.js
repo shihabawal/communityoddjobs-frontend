@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 
 function Job(props) {
-  const { data, classes, skills } = props;
+  const { data, classes } = props;
   const [pageWidth, setPageWidth] = useState(window.innerWidth);
   window.addEventListener("resize", () => {
     let width = window.innerWidth;
@@ -15,30 +15,16 @@ function Job(props) {
   /*************** MAIN RENDER ***************/
   return (
     <div className={classes.Job}>
-      {/* divide into two parts;
-       *Company details
-            --logo
-            -job details
-       *languages and tools */}
-
-      {/* company details */}
       <div className={classes.company__details}>
+        <p>{data.title}</p><br />
         <div className={classes.Job__details}>
+          Employer Name: {props.employerDetails[0]}{" "}<br />
+          Employer Email: {props.employerDetails[1]}<br />
           <div className={classes.Job__company}>
-            <p>{data.company}</p>
-            {data.new && <p className={classes.recent}>new</p>}
-            {data.featured && (
-              <p className={`${classes.recent} ${classes.featured}`}>
-                featured
-              </p>
-            )}
-          </div>
-          <p className={classes.position}>{data.position}</p>
-
-          <div className={classes.minorDetails}>
-            <p>{data.postedAt}</p>
-            <p>{data.contract}</p>
-            <p>{data.location}</p>
+            Description: {props.jobDescription[0]}{" "}<br />
+            Date of Service: {props.jobDescription[1]}{" "}<br />
+            Rate Per Hour: {props.jobDescription[2]}{" "}<br />
+            Location: {props.jobDescription[3]}
           </div>
         </div>
       </div>
@@ -51,16 +37,6 @@ function Job(props) {
           </Grid>
         </Grid>
       </div>
-      {/* languages and tools */}
-      {/**  <div className={classes.skills}>
-        {skills.map((skill) => (
-          <button onClick={handleFilter} key={skill} data-skill-name={skill}>
-            {skill}
-          </button>
-        ))}
-      </div>
-    
-    */}
     </div>
   );
 }

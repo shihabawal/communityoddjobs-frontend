@@ -9,9 +9,10 @@ function JobList(props) {
   function renderJob(data) {
     console.log("Data " + data);
     const job = data.data.map((job) => {
-      console.log("Job " + job);
-      let jobDetails = [job.employerName, job.employerEmail, job.description, job.dateOfService, job.ratePerHour, job.location];
-      return <Job data={job} key={job.title} skills={jobDetails} />;
+      let employerDetails = [job.employerName, job.employerEmail];
+      let jobDescription = [job.description, job.dateOfService, job.ratePerHour, job.location];
+      console.log("jobTitle" + job.title);
+      return <Job data={job} key={job.title} employerDetails={employerDetails} jobDescription={jobDescription} />;
     });
     return job;
   }
