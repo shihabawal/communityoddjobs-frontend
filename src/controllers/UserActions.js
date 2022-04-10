@@ -66,10 +66,89 @@ export const saveJobListing = (payload, callback, error) => {
 };
 
 export const retrieveJobListing = (payload, callback, error) => {
-  console.log("payload", payload);
   Axios({
     method: "get",
     url: env.REACT_APP_API_URL + "/listing/",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    data: payload,
+  })
+    .then((response) => {
+      if (response.status && response.status === 200) {
+        callback && callback(response.data);
+      }
+    })
+    .catch((err) => {
+      error && error(err);
+    });
+};
+
+export const applyJob = (payload, callback, error) => {
+  Axios({
+    method: "post",
+    url: env.REACT_APP_API_URL + "/listing/" + payload.id + "/apply",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    data: payload,
+  })
+    .then((response) => {
+      if (response.status && response.status === 200) {
+        callback && callback(response.data);
+      }
+    })
+    .catch((err) => {
+      error && error(err);
+    });
+};
+
+export const searchJob = (payload, callback, error) => {
+  Axios({
+    method: "post",
+    url: env.REACT_APP_API_URL + "/listing/search",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    data: payload,
+  })
+    .then((response) => {
+      if (response.status && response.status === 200) {
+        callback && callback(response.data);
+      }
+    })
+    .catch((err) => {
+      error && error(err);
+    });
+};
+
+export const approveJob = (payload, callback, error) => {
+  Axios({
+    method: "post",
+    url: env.REACT_APP_API_URL + "/listing/" + payload.id + "/approve",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    data: payload,
+  })
+    .then((response) => {
+      if (response.status && response.status === 200) {
+        callback && callback(response.data);
+      }
+    })
+    .catch((err) => {
+      error && error(err);
+    });
+};
+
+export const rejectJob = (payload, callback, error) => {
+  Axios({
+    method: "post",
+    url: env.REACT_APP_API_URL + "/listing/" + payload.id + "/reject",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",

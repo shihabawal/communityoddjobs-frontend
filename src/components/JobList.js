@@ -7,11 +7,9 @@ function JobList(props) {
   const classes = withStyles(JobListStyles);
 
   function renderJob(data) {
-    console.log("Data " + data);
     const job = data.data.map((job) => {
       let employerDetails = [job.employerName, job.employerEmail];
       let jobDescription = [job.description, job.dateOfService, job.ratePerHour, job.location];
-      console.log("jobTitle" + job.title);
       return <Job data={job} key={job.title} employerDetails={employerDetails} jobDescription={jobDescription} />;
     });
     return job;
